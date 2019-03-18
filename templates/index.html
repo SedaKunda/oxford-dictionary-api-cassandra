@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Oxford Dictionary API</title>
+</head>
+<body>
+<h3>Oxford Dictionary</h3>
+<p><a href="https://developer.oxforddictionaries.com/documentation/">External API Documentation</a></p>
+<h4>DICTIONARY</h4>
+<p>Search for word (definition)</p>
+<form action = "{{ url_for('get_word_definition', source_lang='src', word='wrd') }}" method = "POST">
+         <p>Search for word: <input type = "text" name = "wrd" /></p>
+         <p>Source language: <input type = "text" name = "src" value="en" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+
+<p>Search for word (example uses)</p>
+<form action = "{{ url_for('get_word_example', source_lang='src', word='wrd') }}" method = "POST">
+         <p>Search for word: <input type = "text" name = "wrd" /></p>
+         <p>Source language: <input type = "text" name = "src" value="en" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+
+<p>Search for word by region</p>
+<form action = "{{ url_for('get_word_by_region', source_lang='src', word='wrd', region='reg') }}" method = "POST">
+         <p>Search for word: <input type = "text" name = "wrd" /></p>
+         <p>Source language: <input type = "text" name = "src" value="en" /></p>
+         <p>Region (GB/US) : <input type = "text" name = "reg" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+
+<h4>THESAURUS</h4>
+<p>Search for all synonyms:</p>
+<form action = "{{ url_for('get_synonyms', source_lang='src', word='wrd') }}" method = "POST">
+         <p>Search for word: <input type = "text" name = "wrd" /></p>
+         <p>Source language: <input type = "text" name = "src" value="en" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+
+<p>Search for rare synonyms:</p>
+<form action = "{{ url_for('get_synonyms_rare', source_lang='src', word='wrd') }}" method = "POST">
+         <p>Search for word: <input type = "text" name = "wrd" /></p>
+         <p>Source language: <input type = "text" name = "src" value="en" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+
+
+<p>Search for dated synonyms:</p>
+<form action = "{{ url_for('get_synonyms_dated', source_lang='src', word='wrd') }}" method = "POST">
+         <p>Search for word: <input type = "text" name = "wrd" /></p>
+         <p>Source language: <input type = "text" name = "src" value="en" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+
+<h4>LANGUAGES</h4>
+<p><a href="http://127.0.0.1:8080/languages">Get all languages</a></p>
+<p><a href="http://127.0.0.1:8080/languages/dictionary">Get dictionary names for all languages</a></p>
+
+<form action = "{{ url_for('get_language_by_region', reg='reg') }}" method = "POST">
+         <p>Specify region : <input type = "text" name = "reg" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+</body>
+
+</html>
