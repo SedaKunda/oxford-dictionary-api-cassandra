@@ -1,33 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style>
+   body
+   { font: normal .80em 'trebuchet ms', arial, sans-serif;
+     background: #FFF;
+     color: #555;}
+   p
+   { padding: 0 0 20px 0;
+     line-height: 1.7em;}
+   h1, h2, h3, h4, h5, h6 
+   { color: #362C20;
+     letter-spacing: 0em;
+     padding: 0 0 5px 0;}
+   h3
+   { font-size: 140%;
+     padding: 5px 0 0 0;}
+   h4
+   { color: #009FBC;
+     padding: 0 0 5px 0;
+     font: normal 110% arial;
+     text-transform: uppercase;}
+   a, a:hover
+   { outline: none;
+     text-decoration: underline;
+     color: #00C6F0;}
+   a:hover
+   { text-decoration: none;}
+   .button {
+     background-color: #008CBA; 
+     color: white; 
+     border: 2px solid #008CBA;
+     border-radius: 8px;
+   }
+   .button:hover {
+     background-color: white;
+     color:black;
+   }
+</style>
 <meta charset="utf-8" />
-<title>Oxford Dictionary API</title>
+<title>Oxford Dictionary API/Pokemon</title>
 </head>
 <body>
-<h3>Oxford Dictionary</h3>
+<h3>Pokemon (w/ Cassandra)</h3>
+
+<h4>GET</h4>
+<p><a href="{{url_for('profile', name='Weedle')}}">Get profile for Weedle</a></p>
+<p><a href="{{url_for('profile_type', type2='Poison', type1='Grass')}}">Get all profiles with type 1 = poison and type 2 = grass</a></p>
+
+<h4>POST</h4>
+<p>Create new profile:</p>
+<form action = "{{ url_for('create_profile', name='name') }}" method = "POST">
+         <p>Name: <input type = "text" name = "name" /></p>
+         <p><input type = "submit" value = "Submit" class="button" class="button"/></p>
+      </form>
+
+<h4>PUT</h4>
+<p>Update type 1 for specified name:</p>
+<form action = "{{ url_for('update_profile_type1', type1='type1', name='name') }}" method = "POST">
+         <p>Type 1: <input type = "text" name = "type1" /></p>
+         <p>Name: <input type = "text" name = "name" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
+      </form>
+
+<p>Update type 2 for specified name:</p>
+<form action = "{{ url_for('update_profile_type2', type2='type2', name='name') }}" method = "POST">
+         <p>Type2 : <input type = "text" name = "type2" /></p>
+         <p>Name: <input type = "text" name = "name" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
+      </form>
+
+<h4>DELETE</h4>
+<p>Delete all stats for specified name:</p>
+<form action = "{{ url_for('delete_profile', name='name') }}" method = "POST">
+         <p>Name: <input type = "text" name = "name" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
+      </form>
+
+<h3>Oxford Dictionary (External API)</h3>
 <p><a href="https://developer.oxforddictionaries.com/documentation/">External API Documentation</a></p>
+
+<h4>LANGUAGES</h4>
+<p><a href="{{url_for('get_all_languages')}}">Get all languages</a></p>
+<p><a href="{{url_for('get_language_dictionaries')}}">Get dictionary names for all languages</a></p>
+
+<form action = "{{ url_for('get_language_by_region', reg='reg') }}" method = "POST">
+         <p>Specify region : <input type = "text" name = "reg" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
+      </form>
+
 <h4>DICTIONARY</h4>
-<p>Search for word (definition)</p>
+<p>Search for word (definition):</p>
 <form action = "{{ url_for('get_word_definition', source_lang='src', word='wrd') }}" method = "POST">
          <p>Search for word: <input type = "text" name = "wrd" /></p>
          <p>Source language: <input type = "text" name = "src" value="en" /></p>
-         <p><input type = "submit" value = "submit" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
       </form>
 
-<p>Search for word (example uses)</p>
+<p>Search for word (example uses):</p>
 <form action = "{{ url_for('get_word_example', source_lang='src', word='wrd') }}" method = "POST">
          <p>Search for word: <input type = "text" name = "wrd" /></p>
          <p>Source language: <input type = "text" name = "src" value="en" /></p>
-         <p><input type = "submit" value = "submit" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
       </form>
 
-<p>Search for word by region</p>
+<p>Search for word by region:</p>
 <form action = "{{ url_for('get_word_by_region', source_lang='src', word='wrd', region='reg') }}" method = "POST">
          <p>Search for word: <input type = "text" name = "wrd" /></p>
          <p>Source language: <input type = "text" name = "src" value="en" /></p>
          <p>Region (GB/US) : <input type = "text" name = "reg" /></p>
-         <p><input type = "submit" value = "submit" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
       </form>
 
 <h4>THESAURUS</h4>
@@ -35,14 +117,14 @@
 <form action = "{{ url_for('get_synonyms', source_lang='src', word='wrd') }}" method = "POST">
          <p>Search for word: <input type = "text" name = "wrd" /></p>
          <p>Source language: <input type = "text" name = "src" value="en" /></p>
-         <p><input type = "submit" value = "submit" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
       </form>
 
 <p>Search for rare synonyms:</p>
 <form action = "{{ url_for('get_synonyms_rare', source_lang='src', word='wrd') }}" method = "POST">
          <p>Search for word: <input type = "text" name = "wrd" /></p>
          <p>Source language: <input type = "text" name = "src" value="en" /></p>
-         <p><input type = "submit" value = "submit" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
       </form>
 
 
@@ -50,16 +132,7 @@
 <form action = "{{ url_for('get_synonyms_dated', source_lang='src', word='wrd') }}" method = "POST">
          <p>Search for word: <input type = "text" name = "wrd" /></p>
          <p>Source language: <input type = "text" name = "src" value="en" /></p>
-         <p><input type = "submit" value = "submit" /></p>
-      </form>
-
-<h4>LANGUAGES</h4>
-<p><a href="http://127.0.0.1:8080/languages">Get all languages</a></p>
-<p><a href="http://127.0.0.1:8080/languages/dictionary">Get dictionary names for all languages</a></p>
-
-<form action = "{{ url_for('get_language_by_region', reg='reg') }}" method = "POST">
-         <p>Specify region : <input type = "text" name = "reg" /></p>
-         <p><input type = "submit" value = "submit" /></p>
+         <p><input type = "submit" value = "Submit" class="button" /></p>
       </form>
 </body>
 
