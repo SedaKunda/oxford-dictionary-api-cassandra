@@ -29,3 +29,12 @@ spec:
               value: Kubernetes Cluster
             - name: CASSANDRA_ENDPOINT_SNITCH
               value: GossipingPropertyFileSnitch
+          ports:
+            - containerPort: 9042
+              name: cql
+          volumeMounts:
+            - mountPath: /var/lib/cassandra/data
+              name: data
+      volumes:
+        - name: data
+          emptyDir: {}
