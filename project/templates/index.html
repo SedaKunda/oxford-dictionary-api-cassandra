@@ -42,6 +42,15 @@
 <title>Oxford Dictionary API/Pokemon</title>
 </head>
 <body>
+   
+<h3>Dictionary (w/ Cassandra)</h3>
+   <p>/database/{word} e.g. <a href="{{url_for('db_word', word='happy')}}">Get meaning for word happy</a></p>
+   <p>/database/synonym/{word} e.g. <a href="{{url_for('db_synonym', word='happy')}}">Get synonym for word happy</a></p>
+   <form action = "{{ url_for('create_wordtype', wordtype='wordtype') }}" method = "POST">
+         <p>Wordtype: <input type = "text" name = "wordtype" /></p>
+         <p><input type = "submit" value = "Submit" class="button" class="button"/></p>
+      </form>
+
 <h3>Pokemon (w/ Cassandra)</h3>
 
 <h4>GET</h4>
