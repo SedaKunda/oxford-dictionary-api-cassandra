@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project
+spec:
+  selector:
+    matchLabels:
+      app: project
+      tier: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: project
+        tier: frontend
+    spec:
+      containers:
+      - name: project
+        image: "gcr.io/elite-pointer-235009/project:v6"
