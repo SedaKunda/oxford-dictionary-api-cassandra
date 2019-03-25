@@ -34,6 +34,28 @@ In container, run kubectl exec -it cassandra-<specific-name> cqlsh and run queri
 - CREATE TABLE pokemon.stats (ID int,Name text PRIMARY KEY, Type1 text, Type2 text, Total int, HP int,Attack int, Defence int, SpAttack int, SpDefence int,Speed int, Generation int, Legendary boolean);
 - COPY pokemon.stats(ID,Name,Type1,Type2,Total,HP,Attack,Defence,SpAttack,SpDefence,Speed,Generation,Legendary) FROM '/pokemon.csv' WITH DELIMITER=',' AND HEADER=TRUE;
 
+- CREATE KEYSPACE dictionary WITH REPLICATION ={'class' : 'SimpleStrategy', 'replication_factor' : 1};
+- CREATE TABLE dictionary.dictionary (ID int,word text PRIMARY KEY, typeid int, description text, example text);
+- CREATE TABLE dictionary.thesaurus (ID int,word text PRIMARY KEY, typeid int,synonym text,example text,subclass int);
+- CREATE TABLE dictionary.wordtypes (ID int,type text PRIMARY KEY);
+- CREATE TABLE dictionary.synonymtype (ID int,type text PRIMARY KEY);
+- insert into dictionary.dictionary (ID,word,typeid,description,example) values (1,'happy',2,'feeling or showing pleasure or contentment','Seda was not happy about the cloud computing assignment');
+- insert into dictionary.dictionary (ID,word,typeid,description,example) values (2,'sad',2,'feeling or showing sorrow','he was crying because he was sad');
+- insert into dictionary.dictionary (ID,word,typeid,description,example) values (3,'work',1,'activity involving mental or physical effort done in order to achieve a purpose or result','tired from a days work');
+- insert into dictionary.dictionary (ID,word,typeid,description,example) values (4,'walk',1,'move at a regular pace by lifting and setting down each foot in turn never having both feet off the ground at once','take the dog for a walk');
+- insert into dictionary.dictionary (ID,word,typeid,description,example) values (5,'glass',3,'a drinking container made from glass','a beer glass');
+- insert into dictionary.thesaurus (ID,word,typeid,synonym,example,subclass) values (1,'happy',2,'thrilled','Seda was not thrilled about the cloud computing assignment',3);
+- insert into dictionary.thesaurus (ID,word,typeid,synonym,example,subclass) values (2,'sad',2,'despondent','he was crying because he was despondent',1);
+- insert into dictionary.thesaurus (ID,word,typeid,synonym,example,subclass) values (3,'work',1,'toil','tired from a days toil',1);
+- insert into dictionary.thesaurus (ID,word,typeid,synonym,example,subclass) values (4,'walk',1,'saunter','take the dog for a saunter',2);
+- insert into dictionary.thesaurus (ID,word,typeid,synonym,example,subclass) values (5,'glass',3,'mirror','she couldnt wait to put the dress on and look in the glass',3);
+- insert into dictionary.wordtypes (ID,type) values (1,'verb');
+- insert into dictionary.wordtypes (ID,type) values (2,'adjectives');
+- insert into dictionary.wordtypes (ID,type) values (3,'noun');
+- insert into dictionary.synonymtype (ID,type) values (1,'rare');
+- insert into dictionary.synonymtype (ID,type) values (2,'dated');
+- insert into dictionary.synonymtype (ID,type) values (3,'regular');
+
 # Deployment
 This application is created for the Kubertenes environment.
 
