@@ -34,7 +34,42 @@ def hello():
 	return render_template('index.html')
 
 #######PERSISTENT CLOUD DATABASE
-###cassandra
+###cassandra - self created database
+#get description of specified word
+@app.route('/database/<word>', methods=['GET'])
+def db_word(word):
+	rows = session.execute("Select word, description From dictionary.dictionary where word = '{}' ALLOW FILTERING".format(word))
+	dict_name = {}
+	if not rows:
+		return jsonify({'error':'No descriptions for that word'}), 404
+	else:
+		for (description, word) in rows:
+			dict_name[word] = description
+		return jsonify(dict_name), 200
+
+#get synonym of specified word
+@app.route('/database/synonym/<word>', methods=['GET'])
+def db_synonym(word):
+	rows = session.execute("Select word, synonym From dictionary.thesaurus where word = '{}' ALLOW FILTERING".format(word))
+	dict_name = {}
+	if not rows:
+		return jsonify({'error':'No synonyms for that word'}), 404
+	else:
+		for (synonym, word) in rows:
+			dict_name[word] = synonym
+		return jsonify(dict_name), 200
+
+#create a new word type
+@app.route('/database/create/<wordtype>', methods=['POST'])
+def create_wordtype(wordtype):
+	if not request.form or not 'wordtype' in request.form: #check if request is json format and has a name
+		return jsonify({'error':'the new record needs to have a name'}), 400
+	else:
+		name = request.form['wordtype']
+		rows = session.execute("Insert into dictionary.wordtypes (type) values('{}')".format(wordtype))
+		return jsonify({'created':' /database/create/{}'.format(wordtype)}), 201
+
+###cassandra - built on lab examples
 #get attacks for specified name
 @app.route('/pokemon/<name>', methods=['GET'])
 def profile(name):
