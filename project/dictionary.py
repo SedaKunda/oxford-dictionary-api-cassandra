@@ -60,14 +60,14 @@ def profile_type(type2, type1):
 		return jsonify(dict_t2), 200
 
 #create a new profile with specified name
-@app.route('/pokemon/<name>', methods=['POST'])
+@app.route('/pokemon/create/<name>', methods=['POST'])
 def create_profile(name):
 	if not request.form or not 'name' in request.form: #check if request is json format and has a name
 		return jsonify({'error':'the new record needs to have a name'}), 400
 	else:
 		name = request.form['name']
 		rows = session.execute("Insert into pokemon.stats (Name,Type1,Type2,Total,HP,Attack,Defence,SpAttack,SpDefence,Speed,Generation,Legendary) values('{}','sometype','sometype',2,3,4,5,6,7,8,9,True)".format(name))
-		return jsonify({'created':' /pokemon/{}'.format(name)}), 201
+		return jsonify({'created':' /pokemon/create/{}'.format(name)}), 201
 
 #Update type 1 for specified name
 @app.route('/pokemon/<type1>/<name>', methods=['POST', 'PUT'])
