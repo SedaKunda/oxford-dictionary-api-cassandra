@@ -34,7 +34,7 @@ Cassandra database was used for storing persistent information. Instructions for
 # Getting started (setup)
 download pokemon.csv file using wget -O pokemon.csv https://tinyurl.com/y25vmgbq
 
-###QUERIES:
+## QUERIES:
 In container, run kubectl exec -it cassandra-<specific-name> cqlsh and run queries below:
 
 - CREATE KEYSPACE pokemon WITH REPLICATION ={'class' : 'SimpleStrategy', 'replication_factor' : 1};
