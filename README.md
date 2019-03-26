@@ -34,8 +34,8 @@ Cassandra database was used for storing persistent information. Instructions for
 # Getting started (setup)
 download pokemon.csv file using wget -O pokemon.csv https://tinyurl.com/y25vmgbq
 
-## QUERIES:
-In container, run kubectl exec -it cassandra-<specific-name> cqlsh and run queries below:
+## Queries:
+In a container, run kubectl exec -it cassandra-<specific-name> cqlsh and run queries below:
 
 - CREATE KEYSPACE pokemon WITH REPLICATION ={'class' : 'SimpleStrategy', 'replication_factor' : 1};
 - CREATE TABLE pokemon.stats (ID int,Name text PRIMARY KEY, Type1 text, Type2 text, Total int, HP int,Attack int, Defence int, SpAttack int, SpDefence int,Speed int, Generation int, Legendary boolean);
@@ -64,12 +64,14 @@ In container, run kubectl exec -it cassandra-<specific-name> cqlsh and run queri
 - insert into dictionary.synonymtype (ID,type) values (3,'regular');
 
 # Deployment
-This application is created for the Kubertenes environment. The following steps must be followed for deployment.
-kubectl create -f cassandra-peer-service.yaml
-kubectl create -f cassandra-service.yaml
-kubectl create -f cassandra-replication-controller.yaml
-kubectl create -f frontend-deployment.yaml
-kubectl create -f frontend-service.yaml
+This application is created for the Kubertenes environment. The following steps must be followed for deployment (in order).
+kubectl |
+------- |
+kubectl create -f cassandra-peer-service.yaml |
+kubectl create -f cassandra-service.yaml |
+kubectl create -f cassandra-replication-controller.yaml |
+kubectl create -f frontend-deployment.yaml |
+kubectl create -f frontend-service.yaml |
 
 ## To scale:
 > kubectl scale deployment project --replicas=3
