@@ -1,9 +1,13 @@
 # Oxford-Dictionary-API / Pokemon API
-- This application uses pokemon.csv data stored in a cassandra database as its main domain and makes use of the Oxford Dictionary API to complement it's functionality.
-- Cloud computing coursework.
+- There are 3 parts to this application. First is the Oxford dictionary API that connects to an Oxford Dictionaries world renowned content. Documentation for this can be found here. https://developer.oxforddictionaries.com/documentation/
+- Second, building on top of the pokemon examples worked on in the lab, the app exposes an API with multiple endpoints including POST, PUT, DELETE and GET requests.
+- Finally, to explore the creation of my own cassandra database, a keyspace called dictionary is created with 4 tables and exposes some endpoints there as well.
 
 # Overview
 The main web app is in /project/dictionary.py and the exposed endpoints are:
+- /database/{word} : GET returns the meaning of a word
+- /database/synonym/{word} : GET returns the synonyms of a word
+- /database/create/{word} : POST creates a new word
 
 - /pokemon/{name} : GET returns attacks for specified name
 - /pokemon/types/{type2}/{type1} : GET returns name, type1, type2 for specified type2 and type1
@@ -24,10 +28,13 @@ base url= https://od-api.oxforddictionaries.com:443/api/v1/
 - /languages/{reg} : GET language details for specific region
 - /languages/dictionary : GET dictionary names for all languages
 
-# Getting started
+# Database
+Cassandra database was used for storing persistent information. Instructions for setting up the database are below.
+
+# Getting started (setup)
 download pokemon.csv file using wget -O pokemon.csv https://tinyurl.com/y25vmgbq
 
-QUERIES:
+###QUERIES:
 In container, run kubectl exec -it cassandra-<specific-name> cqlsh and run queries below:
 
 - CREATE KEYSPACE pokemon WITH REPLICATION ={'class' : 'SimpleStrategy', 'replication_factor' : 1};
@@ -57,9 +64,16 @@ In container, run kubectl exec -it cassandra-<specific-name> cqlsh and run queri
 - insert into dictionary.synonymtype (ID,type) values (3,'regular');
 
 # Deployment
-This application is created for the Kubertenes environment.
+This application is created for the Kubertenes environment. The following steps must be followed for deployment.
+kubectl create -f cassandra-peer-service.yaml
+kubectl create -f cassandra-service.yaml
+kubectl create -f cassandra-replication-controller.yaml
+kubectl create -f frontend-deployment.yaml
+kubectl create -f frontend-service.yaml
 
-# Prerequisites
+to scale:
+kubectl scale deployment project --replicas=3
+kubectl scale rc cassandra --replicas=3
 
 # Authors
 Seda Kunda
