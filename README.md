@@ -71,12 +71,9 @@ kubectl create -f cassandra-replication-controller.yaml
 kubectl create -f frontend-deployment.yaml
 kubectl create -f frontend-service.yaml
 
-to scale:
-kubectl scale deployment project --replicas=3
-kubectl scale rc cassandra --replicas=3
+## To scale:
+> kubectl scale deployment project --replicas=3
+> kubectl scale rc cassandra --replicas=3
 
 # Authors
 Seda Kunda
-
-# Acknowledgments
-Arman Khouzani
